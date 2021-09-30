@@ -247,60 +247,6 @@ void MyMesh::GenerateTorus(float a_fOuterRadius, float a_fInnerRadius, int a_nSu
 	CompleteMesh(a_v3Color);
 	CompileOpenGL3X();
 }
-void MyMesh::GenerateHelix(uint a_uSubdivisions, float a_fRadius1 = 1.0f, float a_fRadius2 = 0.5f, uint a_nLenght = 2, vector3 a_v3Color = C_WHITE) {
-	Release();
-	Init();
-
-	// x = rcost
-	// y = rsint
-	// z = ct
-	// 2 * PI * c gives the vertical separation of the loops
-	// t runs from 0 to 2 * PI
-
-	// radius1 is radius of the circle between the loops
-	// radius2 is distance of circle center from world center
-	// length is how many full circles are made
-
-	// The amount of radians between each point in a segment and radians between each segment
-	float radians = glm::radians(360.0f / a_uSubdivisions);
-
-	// The radius of the tube
-	float tubeRadius = a_fRadius1 / 6;
-
-	// The distance from the origin to the center of the tube
-	float holeToTubeCenterRadius = a_fRadius1 + tubeRadius;
-
-	// GENERATE THE TORUS
-	for (int currentCylinder = 1; currentCylinder <= a_uSubdivisions; currentCylinder++) {
-		for (int currentFace = 1; currentFace <= a_uSubdivisions; currentFace++) {
-			// Represents each of the four corners for each quad that makes up the torus
-			float x1 = (holeToTubeCenterRadius + (tubeRadius * cos(radians * (currentFace - 1)))) * (cos(radians * (currentCylinder - 1)));
-			float y1 = (holeToTubeCenterRadius + (tubeRadius * cos(radians * (currentFace - 1)))) * (sin(radians * (currentCylinder - 1)));
-			float z1 = tubeRadius * sin(radians * (currentFace - 1));
-
-			float x2 = (holeToTubeCenterRadius + (tubeRadius * cos(radians * currentFace))) * (cos(radians * (currentCylinder - 1)));
-			float y2 = (holeToTubeCenterRadius + (tubeRadius * cos(radians * currentFace))) * (sin(radians * (currentCylinder - 1)));
-			float z2 = tubeRadius * sin(radians * (currentFace));
-
-			float x3 = (holeToTubeCenterRadius + (tubeRadius * cos(radians * (currentFace - 1)))) * (cos(radians * currentCylinder));
-			float y3 = (holeToTubeCenterRadius + (tubeRadius * cos(radians * (currentFace - 1)))) * (sin(radians * currentCylinder));
-			float z3 = tubeRadius * sin(radians * (currentFace - 1));
-
-			float x4 = (holeToTubeCenterRadius + (tubeRadius * cos(radians * currentFace))) * (cos(radians * currentCylinder));
-			float y4 = (holeToTubeCenterRadius + (tubeRadius * cos(radians * currentFace))) * (sin(radians * currentCylinder));
-			float z4 = tubeRadius * sin(radians * (currentFace));
-
-			AddQuad(vector3(x1, y1, z1),
-				vector3(x3, y3, z3),
-				vector3(x2, y2, z2),
-				vector3(x4, y4, z4));
-		}
-	}
-
-	// Adding information about color
-	CompleteMesh(a_v3Color);
-	CompileOpenGL3X();
-}
 void MyMesh::GenerateSphere(float a_fRadius, int a_nSubdivisions, vector3 a_v3Color)
 {
 	if (a_fRadius < 0.01f)

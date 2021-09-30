@@ -207,7 +207,6 @@ public:
 	OUTPUT: ---
 	*/
 	void GenerateSphere(float a_fRadius, int a_nSubdivisions, vector3 a_v3Color = C_WHITE);
-	void GenerateHelix(uint a_uSubdivisions, float a_fRadius1 = 1.0f, float a_fRadius2 = 0.5f, uint a_nLenght = 2, vector3 a_v3Color = C_WHITE);
 #pragma endregion
 };
 
